@@ -1,0 +1,16 @@
+<h1>${ Resource.msgf('product.found', 'mymessage', null, pdict.myProduct.productName) }</h1>
+
+<p>${pdict.myProduct.longDescription}</p>
+
+<br><br>
+<img src="${ pdict.myProduct.images.small[0].url }" alt="${ pdict.myProduct.images.small[0].alt }">
+
+<br><br>
+${ pdict.myProduct.price.sales.value } ${ pdict.myProduct.price.sales.currency }
+
+<br><br><br><br><br><br>
+<u>debug:</u>
+<br>
+<small>
+${JSON.stringify(pdict.myProduct)}
+</small>
