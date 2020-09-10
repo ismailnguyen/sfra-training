@@ -5,6 +5,7 @@ var newsletterForm = server.forms.getForm('srvnewsletter');
 //8-1 Define a variable named HookMgr that requires the HookMgr class
 
 //7-7 require "Logger" from dw.system package
+var Logger = require('dw/system/Logger')
 
 server.get('Start', function (req, res, next) {
 	
@@ -41,6 +42,7 @@ server.post('HandleForm', function (req, res, next) {
 	{
 		//7-7 create a variable called "logger" with log file prefix as "NewsLog" and logging
 		//7-7 category as "newsletter"
+		var logger = Logger.getLogger('NewsLogs', 'newsletter')
 
 		Transaction.begin()
 
@@ -57,12 +59,13 @@ server.post('HandleForm', function (req, res, next) {
 			//8-1 call app.email hook, specify the extensionPoint and function
 			//7-7 log a debug message that signup was successful
 			Transaction.commit()
+			logger.debug('*****signup was successful')
 		}
 		catch (e)
 		{
 			Transaction.rollback();
 			//7-7 log an error message "Problem with subscription: {0}", e.causeMessage
-			
+			logger.error('problem with subscription: {0}', e.causeMessage)
             // 7-2 You need to create error.message.email.invalidvalue externalized string
 			res.setViewData({ emailerror: Resource.msg('error.message.email.invalid.value', 'forms', null) });
 			res.render('newsletter/srvnewslettersignup', {
